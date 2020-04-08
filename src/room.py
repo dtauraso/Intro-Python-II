@@ -27,4 +27,11 @@ class Room():
 
         directions = [n, s, e, w]
         return [i for i in directions if i]
+
+    def has_item(self, item_name):
+        return item_name in self.items
+
     def add_item(self, new_item):
+        self.items.append(new_item)
+    def get_all_items(self):
+        return self.items
