@@ -9,14 +9,12 @@ class Room():
         self.s_to = None
         self.e_to = None
         self.w_to = None
-        if(items == None):
-            self.items = []
-        else:
-            self.items = items
+        self.items = [] if items == None else items
 
     def __str__(self):
-        return f'{self.name} {self.description}'
-
+        return f'{self.name} {self.description} Items: {self.get_items()}'
+    def get_items(self):
+        return ''.join([f'{i.name} {i.description}|' for i in self.items])
     def get_directions(self):
 
         # I don't know how to make this cleaner
@@ -29,7 +27,10 @@ class Room():
         return [i for i in directions if i]
 
     def has_item(self, item_name):
-        return item_name in self.items
+        # print(self.items, item_name)
+        return item_name in [i.name for i in self.items]
+    def get_item(self, item_name):
+        return [i for i in self.items if i.name == item_name][0]
 
     def add_item(self, new_item):
         self.items.append(new_item)

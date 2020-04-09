@@ -87,6 +87,7 @@ def main_game():
 
         # parse the command
         command_segments = command.split(' ')
+        # print(command_segments)
         if(len(command_segments) == 1):
 
             if(is_cardinal_direction(command)):
@@ -94,7 +95,11 @@ def main_game():
                 if(my_player.is_movable_in_direction(command)):
                     my_player.movie_in_direction(command)
 
+            else:
+                if(command == 'p'):
+                    my_player.print_inventory()
                 else:
+
                     print(f'{my_player.name} can\'t go {command}')
             if(is_quit(command)):
                 break
@@ -102,15 +107,24 @@ def main_game():
         else:
             if(command_segments[0] == 'get'):
                 item_name = command_segments[1]
+                # print(command_segments)
                 if(my_player.current_room.has_item(item_name)):
-                    my_player.take_item_from_room(item_name)
+                    item = my_player.current_room.get_item(item_name)
+
+                    my_player.take_item_from_room(item)
+                    if(my_player.has_item(item_name)):
+                        print('player got', item_name)
                 else:
                     print('We can\' get an item we not in the room')
 
             if(command_segments[0] == 'drop'):
                 item_name = command_segments[1]
                 if(my_player.has_item(item_name)):
-                    my_player.put_item_into_room(item_name)
+                    item = my_player.get_item(item_name)
+
+                    my_player.put_item_into_room(item)
+                    if(my_player.current_room.has_item(item_name)):
+                        print('player put', item_name, 'into room')
                 else:
                     print('We can\' drop an item we don\'t have')
             # if(show_items(command)):
